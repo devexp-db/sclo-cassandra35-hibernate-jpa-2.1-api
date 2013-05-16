@@ -1,0 +1,85 @@
+--- pom.xml	2013-04-03 03:00:35.000000000 +0200
++++ pom.xml-gil	2013-05-09 18:33:09.073572045 +0200
+@@ -51,4 +51,82 @@
+     <developerConnection>scm:git:git@github.com:hibernate/hibernate-jpa-api.git</developerConnection>
+     <url>http://github.com/hibernate/hibernate-jpa-api</url>
+   </scm>
++
++  <build>
++    <plugins>
++      
++      <plugin>
++        <groupId>org.apache.maven.plugins</groupId>
++        <artifactId>maven-compiler-plugin</artifactId>
++        <version>2.5.1</version>
++        <configuration>
++          <encoding>UTF-8</encoding>
++          <source>1.6</source>
++          <target>1.6</target>
++        </configuration>
++      </plugin>
++      
++      <plugin>
++        <groupId>org.apache.maven.plugins</groupId>
++        <artifactId>maven-resources-plugin</artifactId>
++        <version>2.5</version>
++        <configuration>
++          <encoding>UTF-8</encoding>
++        </configuration>
++      </plugin>
++      
++      <plugin>
++        <groupId>org.apache.felix</groupId>
++        <artifactId>maven-bundle-plugin</artifactId>
++        <version>2.3.7</version>
++        <configuration>
++          <instructions>
++            <Bundle-Name>${project.artifactId}</Bundle-Name>
++            <Bundle-SymbolicName>org.hibernate.javax.persistence.hibernate-jpa-2.1-api</Bundle-SymbolicName>
++            <Export-Package>javax.persistence.*;version="${project.version}"</Export-Package>
++            <Import-Package>*</Import-Package>
++            <Implementation-Title>Java Persistence API</Implementation-Title>
++            <Implementation-Vendor>hibernate.org</Implementation-Vendor>
++            <Implementation-Version>${project.version}</Implementation-Version>
++            <Specification-Title>${project.name}</Specification-Title>
++            <Specification-Vendor>Oracle, Inc.</Specification-Vendor>
++            <Specification-Version>2.1</Specification-Version>
++          </instructions>
++        </configuration>
++        <executions>
++          <execution>
++            <id>bundle-manifest</id>
++            <phase>process-classes</phase>
++            <goals>
++              <goal>manifest</goal>
++            </goals>
++          </execution>
++        </executions>
++      </plugin>
++  
++      <plugin>
++        <groupId>org.apache.maven.plugins</groupId>
++        <artifactId>maven-jar-plugin</artifactId>
++        <version>2.4</version>
++        <configuration>
++          <archive>
++            <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
++          </archive>
++        </configuration>
++      </plugin>
++
++      <plugin>
++        <groupId>org.apache.maven.plugins</groupId>
++        <artifactId>maven-javadoc-plugin</artifactId>
++        <version>2.9</version>
++        <configuration>
++          <encoding>UTF-8</encoding>
++          <source>1.6</source>
++          <stylesheetfile>${basedir}/src/main/javadoc/jdstyle.css</stylesheetfile>
++        </configuration>
++      </plugin>
++      
++    </plugins>
++  </build>
++
+ </project>
