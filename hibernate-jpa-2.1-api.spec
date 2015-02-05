@@ -4,7 +4,7 @@
 %global apiversion 2.1
 Name:          hibernate-jpa-2.1-api
 Version:       1.0.0
-Release:       0.5.Draft.16%{?dist}
+Release:       0.6.Draft.16%{?dist}
 Summary:       Java Persistence 2.1 (JSR 338) API
 License:       EPL and BSD
 URL:           http://www.hibernate.org/
@@ -13,7 +13,6 @@ Source1:       http://repo1.maven.org/maven2/org/hibernate/javax/persistence/%{n
 # fix mvn build, this project uses the default Gradle to build
 # sets various mvn plugins properties
 Patch0:        %{oname}-2.1-1.0.0.Draft-16-pom.patch
-BuildRequires: java-devel
 
 BuildRequires: maven-local
 BuildRequires: maven-plugin-bundle
@@ -46,21 +45,26 @@ done
 # Fixing wrong-file-end-of-line-encoding
 sed -i 's/\r//' src/main/javadoc/jdstyle.css
 
+%mvn_file :%{name} %{name}
+
 %build
 
-%mvn_file :%{name} %{name}
 %mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc license.txt README.md
+%doc README.md
+%license license.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc license.txt
+%license license.txt
 
 %changelog
+* Thu Feb 05 2015 gil cattaneo <puntogil@libero.it> 1.0.0-0.6.Draft.16
+- introduce license macro
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0.0-0.5.Draft.16
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
