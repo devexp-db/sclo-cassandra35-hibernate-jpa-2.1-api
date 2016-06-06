@@ -1,14 +1,14 @@
-%global namedreltag .Draft-16
+%global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 %global oname hibernate-jpa-api
 %global apiversion 2.1
 Name:          hibernate-jpa-2.1-api
 Version:       1.0.0
-Release:       0.9.Draft.16%{?dist}
+Release:       1%{?dist}
 Summary:       Java Persistence 2.1 (JSR 338) API
 License:       EPL and BSD
 URL:           http://www.hibernate.org/
-Source0:       https://github.com/hibernate/hibernate-jpa-api/archive/2.1-%{namedversion}.tar.gz
+Source0:       https://github.com/hibernate/hibernate-jpa-api/archive/%{apiversion}0%{?namedreltag}.tar.gz
 Source1:       http://repo1.maven.org/maven2/org/hibernate/javax/persistence/%{name}/%{namedversion}/%{name}-%{namedversion}.pom
 # fix mvn build, this project uses the default Gradle to build
 # sets various mvn plugins properties
@@ -29,7 +29,7 @@ Summary:       Javadoc for %{name}
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q -n %{oname}-%{apiversion}-%{namedversion}
+%setup -q -n %{oname}-%{apiversion}0%{?namedreltag}
 find . -name "*.jar" -delete
 
 cp -p %{SOURCE1} pom.xml
@@ -62,6 +62,9 @@ sed -i 's/\r//' src/main/javadoc/jdstyle.css
 %license license.txt
 
 %changelog
+* Mon Jun 06 2016 gil cattaneo <puntogil@libero.it> 1.0.0-1
+- update to 1.0.0.Final
+
 * Wed Feb 03 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.0-0.9.Draft.16
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 

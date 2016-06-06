@@ -1,9 +1,16 @@
---- pom.xml	2013-04-03 03:00:35.000000000 +0200
-+++ pom.xml-gil	2013-05-09 18:33:09.073572045 +0200
-@@ -51,4 +51,82 @@
-     <developerConnection>scm:git:git@github.com:hibernate/hibernate-jpa-api.git</developerConnection>
-     <url>http://github.com/hibernate/hibernate-jpa-api</url>
-   </scm>
+diff -Nru hibernate-jpa-api-2.10.Final/pom.xml hibernate-jpa-api-2.10.Final.pom/pom.xml
+--- hibernate-jpa-api-2.10.Final/pom.xml	2013-07-26 19:01:44.000000000 +0200
++++ hibernate-jpa-api-2.10.Final.pom/pom.xml	2016-06-06 15:22:56.318181153 +0200
+@@ -50,4 +50,75 @@
+       <url>http://in.relation.to/Bloggers/Steve</url>
+     </developer>
+   </developers>
++
++  <properties>
++    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
++    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
++    <stylesheet.dir>${basedir}/src/main/javadoc</stylesheet.dir>
++  </properties>
 +
 +  <build>
 +    <plugins>
@@ -13,25 +20,15 @@
 +        <artifactId>maven-compiler-plugin</artifactId>
 +        <version>2.5.1</version>
 +        <configuration>
-+          <encoding>UTF-8</encoding>
 +          <source>1.6</source>
 +          <target>1.6</target>
 +        </configuration>
 +      </plugin>
-+      
-+      <plugin>
-+        <groupId>org.apache.maven.plugins</groupId>
-+        <artifactId>maven-resources-plugin</artifactId>
-+        <version>2.5</version>
-+        <configuration>
-+          <encoding>UTF-8</encoding>
-+        </configuration>
-+      </plugin>
-+      
++
 +      <plugin>
 +        <groupId>org.apache.felix</groupId>
 +        <artifactId>maven-bundle-plugin</artifactId>
-+        <version>2.3.7</version>
++        <version>3.0.0</version>
 +        <configuration>
 +          <instructions>
 +            <Bundle-Name>${project.artifactId}</Bundle-Name>
@@ -60,7 +57,7 @@
 +      <plugin>
 +        <groupId>org.apache.maven.plugins</groupId>
 +        <artifactId>maven-jar-plugin</artifactId>
-+        <version>2.4</version>
++        <version>3.0.0</version>
 +        <configuration>
 +          <archive>
 +            <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
@@ -73,13 +70,10 @@
 +        <artifactId>maven-javadoc-plugin</artifactId>
 +        <version>2.9</version>
 +        <configuration>
-+          <encoding>UTF-8</encoding>
-+          <source>1.6</source>
-+          <stylesheetfile>${basedir}/src/main/javadoc/jdstyle.css</stylesheetfile>
++          <stylesheetfile>${stylesheet.dir}/jdstyle.css</stylesheetfile>
 +        </configuration>
 +      </plugin>
 +      
 +    </plugins>
 +  </build>
-+
  </project>
