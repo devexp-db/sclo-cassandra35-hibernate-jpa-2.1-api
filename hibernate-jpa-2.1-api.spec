@@ -1,3 +1,6 @@
+%{?scl:%scl_package hibernate-jpa-2.1-api}
+%{!?scl:%global pkg_name %{name}}
+
 %global namedreltag .Final
 %global oname hibernate-jpa-api
 %global apiversion 2.1
@@ -5,28 +8,28 @@
 %global pkgversion %{?apiversion}%{?minversion}%{?namedreltag}
 %global namedversion %{version}%{?namedreltag}
 
-Name:          hibernate-jpa-2.1-api
-Version:       1.0.0
-Release:       2%{?dist}
-Summary:       Java Persistence 2.1 (JSR 338) API
-License:       EPL and BSD
-URL:           http://www.hibernate.org/
-Source0:       https://github.com/hibernate/hibernate-jpa-api/archive/%{pkgversion}.tar.gz
-Source1:       http://repo1.maven.org/maven2/org/hibernate/javax/persistence/%{name}/%{namedversion}/%{name}-%{namedversion}.pom
+Name:		%{?scl_prefix}hibernate-jpa-2.1-api
+Version:	1.0.0
+Release:	3%{?dist}
+Summary:	Java Persistence 2.1 (JSR 338) API
+License:	EPL and BSD
+URL:		http://www.hibernate.org/
+Source0:	https://github.com/hibernate/%{oname}/archive/%{pkgversion}.tar.gz
+Source1:	http://repo1.maven.org/maven2/org/hibernate/javax/persistence/%{pkg_name}/%{namedversion}/%{pkg_name}-%{namedversion}.pom
 # fix mvn build, this project uses the default Gradle to build
 # sets various mvn plugins properties
-Patch0:        hibernate-jpa-api-2.10.Final-pom.patch
+Patch0:		%{oname}-%{pkgversion}-pom.patch
 
-BuildRequires: maven-local
-BuildRequires: maven-plugin-bundle
-
-BuildArch:     noarch
+BuildRequires:	%{?scl_prefix_maven}maven-local
+BuildRequires:	%{?scl_prefix_maven}maven-plugin-bundle
+%{?scl:Requires: %scl_runtime}
+BuildArch:	noarch
 
 %description
 Hibernate definition of the Java Persistence 2.1 (JSR 338) API.
 
 %package javadoc
-Summary:       Javadoc for %{name}
+Summary:	Javadoc for %{name}
 
 %description javadoc
 This package contains javadoc for %{name}.
@@ -41,14 +44,19 @@ cp -p %{SOURCE1} pom.xml
 # Fixing wrong-file-end-of-line-encoding
 sed -i 's/\r//' src/main/javadoc/jdstyle.css
 
-%mvn_file :%{name} %{name}
+%{?scl:scl enable %{scl_maven} %{scl} - << "EOF"}
+%mvn_file :%{pkg_name} %{pkg_name}
+%{?scl:EOF}
 
 %build
-
+%{?scl:scl enable %{scl_maven} %{scl} - << "EOF"}
 %mvn_build
+%{?scl:EOF}
 
 %install
+%{?scl:scl enable %{scl_maven} %{scl} - << "EOF"}
 %mvn_install
+%{?scl:EOF}
 
 %files -f .mfiles
 %doc README.md
@@ -58,6 +66,9 @@ sed -i 's/\r//' src/main/javadoc/jdstyle.css
 %license license.txt
 
 %changelog
+* Wed Mar 01 2017 Tomas Repik <trepik@redhat.com> - 1.0.0-3
+- scl conversion
+
 * Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
